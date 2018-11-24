@@ -8,13 +8,13 @@ use Illuminate\Auth\Middleware\Authenticate as Middleware;
 class Authenticate extends Middleware
 {
 
-    public function handle($request, Clouser $next, ...$guards)
-    {
-        if ($this->authenticate($request, $guards) === 'authentication_error') {
-            return response()->json(['error' => 'Unauthoriezed!']);
-        }
-        return $next($request);
-    }
+    // public function handle($request, Clouser $next, ...$guards)
+    // {
+    //     if ($this->authenticate($request, $guards) === 'authentication_error') {
+    //         return response()->json(['error' => 'Unauthoriezed!']);
+    //     }
+    //     return $next($request);
+    // }
 
     public function authenticate($request, array $guards)
     {

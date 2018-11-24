@@ -1,5 +1,8 @@
 <?php
 
+use App\Events\TaskCreated;
+use App\Models\Task;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +15,7 @@
 */
 
 Route::get('/', function () {
+    
     return view('welcome');
 });
 
@@ -30,5 +34,42 @@ Route::get('email-test', function () {
 });
 
 
+
+
 Route::get('submit-contact', 'ContactController@index');
 Route::post('submit-contact', 'ContactController@store');
+
+// Laravel Echo Experiments
+
+/**
+ * summary
+ */
+class Order
+{
+    public $id;
+    
+    public function __construct($id)
+    {
+        $this->id = $id;
+    }
+}
+
+Route::get('/update', function () {
+    OrderStatusUpdated::dispatch(new Order(5));
+});
+
+
+Route::get('order-status-update', function () {
+    // OrderStatusUpdated::dispatch();
+});
+
+
+Route::get('/tasks', function () {
+    return Task::latest()->pluck('body');
+});
+
+Route::post('/tasks', function () {
+    $task = Task::forceCreate(request(['body']));
+
+    event(new TaskCreated($task));
+});
