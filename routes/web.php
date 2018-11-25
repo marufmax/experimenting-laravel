@@ -14,10 +14,6 @@ use App\Models\Task;
 |
 */
 
-Route::get('/', function () {
-    
-    return view('welcome');
-});
 
 Auth::routes();
 
@@ -39,20 +35,29 @@ Route::get('email-test', function () {
 Route::get('submit-contact', 'ContactController@index');
 Route::post('submit-contact', 'ContactController@store');
 
-// Laravel Echo Experiments
 
-/**
- * summary
- */
+/**-------------------------------------
+ *
+ *  Laravel Echo and Pusher Experiments
+ *
+ *-------------------------------------*/
+
 class Order
 {
     public $id;
-    
+
     public function __construct($id)
     {
         $this->id = $id;
     }
 }
+
+
+Route::get('/task', function () {
+
+    return view('task.blade.php');
+});
+
 
 Route::get('/update', function () {
     OrderStatusUpdated::dispatch(new Order(5));
@@ -73,3 +78,4 @@ Route::post('/tasks', function () {
 
     event(new TaskCreated($task));
 });
+
